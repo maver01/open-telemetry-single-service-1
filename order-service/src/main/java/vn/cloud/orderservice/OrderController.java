@@ -1,19 +1,26 @@
 package vn.cloud.orderservice;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-
 @RestController
 @RequestMapping("/orders")
+@RequiredArgsConstructor
 public class OrderController {
+
+    private final OrderRepository orderRepository;
+
+    // MS added, not sure why not needed in tutorial. Prob different java version.
+    private OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @GetMapping("/{id}")
     public Order findById(@PathVariable Long id) {
-         return new Order(id, 1L, ZonedDateTime.now(), BigDecimal.TEN);
-     }
+        return this.orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid id: %d".formatted(id)));
+    }
 }

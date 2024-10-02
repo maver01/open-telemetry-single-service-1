@@ -105,3 +105,8 @@ Following the official documentation [here](https://opentelemetry.io/docs/collec
 ## Part 2
 
 Following the second video of the library.
+
+1. Added dependencies: 
+   - implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+   - runtimeOnly 'org.postgresql:postgresql'
+

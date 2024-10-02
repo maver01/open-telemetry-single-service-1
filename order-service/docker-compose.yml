@@ -8,3 +8,16 @@ services:
       OTEL_LOGS_EXPORTER: "logging"
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: opentelemetry
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
