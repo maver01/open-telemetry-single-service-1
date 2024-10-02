@@ -2,7 +2,7 @@
 
 Following the official documentation [here](https://opentelemetry.io/docs/collector/quick-start/#:~:text=Launch%20the%20Collector%3A%20docker%20run%20%20-p%20127.0.0.1%3A4317%3A4317,%23%20Optionally%20tee%20output%20for%20easier%20search%20later) and the youtube video [here](https://www.youtube.com/watch?v=H9bAMRmaaxk&list=LL&index=1&t=390s).
 
-Steps to reproduce: 
+## Part 1
 
 1. Copy the code to run a simple Spring Boot application (1st video up to 4th minute). Check that application is running properly. Installed with gradle, using dependencies:
    - implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -55,3 +55,53 @@ Steps to reproduce:
    -Dotel.logs.exporter=logging \
    -jar /app.jar
    ```
+7. Create docker-compose.yml as:
+   ```
+   version: '1'
+   services:
+     order-service:
+     build: ./
+     environment:
+       OTEL_TRACES_EXPORTER: "logging"
+       OTEL_METRICS_EXPORTER: "logging"
+       OTEL_LOGS_EXPORTER: "logging"
+       ports:
+       - "8080:8080"
+   ```
+   By adding the environment variables, it is not necessary to specify them in the Dockerfile.
+8. By adding the following agent to the gradle.build file, the Dockerfile will not need to pull the har file from the internet anymore, but it will load it from build directory instead:
+   ```
+   configurations {
+     compileOnly {
+         extendsFrom annotationProcessor
+     }
+     agent
+   } 
+   ```
+   ```
+   dependencies {
+     agent "io.opentelemetry.javaagent:opentelemetry-javaagent:1.32.0"
+     ...
+   ```
+   ```
+   tasks.register('copyAgent', Copy) {
+     from configurations.agent {
+       rename "opentelemetry-javaagent-.*\\.jar", "opentelemetry-javaagent.jar"
+     }
+     into layout.buildDirectory.dir("agent")
+   }
+   ```
+   ```
+   bootJar {
+     dependsOn copyAgent 
+     archiveFileName = "app.jar"
+   }
+   ```
+   The Dockerfile can therefore become: 
+   ```
+   ADD /build/agent/opentelemetry-javaagent.jar /opentelemetry-javaagent.jar
+   ```
+   
+## Part 2
+
+Following the second video of the library.

@@ -17,6 +17,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	agent
 }
 
 repositories {
@@ -24,6 +25,8 @@ repositories {
 }
 
 dependencies {
+	agent "io.opentelemetry.javaagent:opentelemetry-javaagent:1.32.0"
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -35,6 +38,16 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.register('copyAgent', Copy) {
+	from configurations.agent {
+		rename "opentelemetry-javaagent-.*\\.jar", "opentelemetry-javaagent.jar"
+	}
+	into layout.buildDirectory.dir("agent")
+}
+
+
 bootJar {
+	dependsOn copyAgent
+
 	archiveFileName = "app.jar"
 }
