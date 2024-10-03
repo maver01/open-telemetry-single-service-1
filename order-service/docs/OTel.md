@@ -1,6 +1,7 @@
 # Open Telemetry Documentation
 
-Following the official documentation [here](https://opentelemetry.io/docs/collector/quick-start/#:~:text=Launch%20the%20Collector%3A%20docker%20run%20%20-p%20127.0.0.1%3A4317%3A4317,%23%20Optionally%20tee%20output%20for%20easier%20search%20later) and the youtube video [here](https://www.youtube.com/watch?v=H9bAMRmaaxk&list=LL&index=1&t=390s).
+Following the official documentation [here](https://opentelemetry.io/docs/collector/quick-start/#:~:text=Launch%20the%20Collector%3A%20docker%20run%20%20-p%20127.0.0.1%3A4317%3A4317,%23%20Optionally%20tee%20output%20for%20easier%20search%20later) and the youtube videos made by
+Linh Vu [here](https://www.youtube.com/watch?v=H9bAMRmaaxk&list=LL&index=1&t=390s).
 
 ## Part 1
 
@@ -112,4 +113,11 @@ Following the second video of the library.
 2. Run postgres using:
    ```docker compose up postgres -d```
 3. Test the creation of the table, then in application.yml, change the url from localhost to postgres.
-4. 
+4. Add jaeger-all-in-one container, use the UI on `localhost:16686`. It will have a service called `app`, which is the name used for the jar file. Service name can be defined in docker-compose.yml.
+
+## Part 3
+
+Following [this](https://youtu.be/rcAYuHCpcUk?list=PLLMxXO6kMiNg6EcNCx6C6pydmgUlDDcZY) video tutorial.
+
+1. Add prometheus to the docker-compose.yml. It will run with a configuration file, that is mounted in the container from the file in a folder we create called docker.
+2. Add grafana to the the docker-compose.yml. It will run with a configuration file, that is mounted in the container from the file in a folder we create called docker.
