@@ -109,4 +109,7 @@ Following the second video of the library.
 1. Added dependencies: 
    - implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
    - runtimeOnly 'org.postgresql:postgresql'
-
+2. Run postgres using:
+   ```docker compose up postgres -d```
+3. Test the creation of the table, then in application.yml, change the url from localhost to postgres.
+4. 

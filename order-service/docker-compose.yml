@@ -11,6 +11,16 @@ services:
     depends_on:
       - postgres
 
+  jaeger-all-in-one:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECOTR_OTLP_ENABLED=true
+    restart: always
+    ports:
+      - "16686:16686"
+      - "14250"
+
   postgres:
     container_name: postgres
     image: postgres:latest

@@ -1,6 +1,6 @@
 package vn.cloud.orderservice;
 
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/orders")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderController {
 
     private final OrderRepository orderRepository;
-
-    // MS added, not sure why not needed in tutorial. Prob different java version.
-    private OrderController(OrderRepository orderRepository) {
+    // MS: added as I have removed Lombok
+    public OrderController(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
