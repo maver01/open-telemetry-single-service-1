@@ -121,3 +121,19 @@ Following [this](https://youtu.be/rcAYuHCpcUk?list=PLLMxXO6kMiNg6EcNCx6C6pydmgUl
 
 1. Add prometheus to the docker-compose.yml. It will run with a configuration file, that is mounted in the container from the file in a folder we create called docker.
 2. Add grafana to the the docker-compose.yml. It will run with a configuration file, that is mounted in the container from the file in a folder we create called docker.
+
+## Part 4
+
+Following [this](https://youtu.be/KayZj8Ga4NI?list=PLLMxXO6kMiNg6EcNCx6C6pydmgUlDDcZY) video tutorial.
+
+Send logs to loki, through the OTel collector. 
+
+1. Add collector configuration, that receives logs, and export them to Loki.
+2. Change configuration for logs exporter in docker-compose.yml:
+   ```
+   OTEL_LOGS_EXPORTER: "otlp"
+   OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: "http://collector:4317"
+   ````
+   Port 4317 is the same as the one defined in the OTLP collector.
+3. Added loki local-config.yml file, even though it is not in tutorial.
+4. Added datasource to grafana-datasources.yml so that it does not have to be specified in grafana UI, but appears automatically. 
