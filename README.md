@@ -6,3 +6,8 @@ This repository follows the code described by Linh Vu in this tutorial: [link](h
 
 Schema:
 ![Schema](docs/schema.jpg)
+
+Run with:
+```
+docker compose up -d
+```
